@@ -34,10 +34,9 @@ If you found any bug and know the solution, then create a Merge Request and I wo
 
 Requirements
 --------------
-WordPress >= 5.6
-WooCommerce >= 5.6
-PHP >= 7.2
-
+ - WordPress >= 5.6
+ - WooCommerce >= 5.6
+ - PHP >= 7.2
 
 Support
 --------------
