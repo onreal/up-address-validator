@@ -26,11 +26,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-use Upio\UpAddressValidator\WcAddressValidation;
-use Upio\UpAddressValidator\Admin\OptionsAdmin;
 define( 'UP_ADDRESS_VALIDATION_PATH', plugin_dir_path( __FILE__ ) );
 
 include_once UP_ADDRESS_VALIDATION_PATH . 'Autoloader.php';
+
+use Upio\UpAddressValidator\WcAddressValidation;
+use Upio\UpAddressValidator\Admin\OptionsAdmin;
 
 class UpAddressValidator {
 
