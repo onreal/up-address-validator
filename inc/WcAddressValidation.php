@@ -81,9 +81,9 @@ class WcAddressValidation
         $destination = self::getDestination();
         $apiKey = apply_filters( 'upio_av_gg_api_key', $this->getOption( 'google_geocoding_api_key' ) );
         $base_url = "https://maps.googleapis.com/maps/api/geocode/json?components=";
-        $url = $base_url . 'administrative_area%3A' . $destination['billing_state'];
-        $url .= '%7Cpostal_code%3A' . $destination['billing_postcode'];
-        $url .= '%7Ccountry%3A' . $destination['billing_country'];
+        $url = $base_url . 'administrative_area%3A' . sanitize_text_field( $destination['billing_state'] );
+        $url .= '%7Cpostal_code%3A' . sanitize_text_field( $destination['billing_postcode'] );
+        $url .= '%7Ccountry%3A' . sanitize_text_field( $destination['billing_country'] );
         $url .= '&key=' . $apiKey;
         return apply_filters( 'upio_av_geocoding_request_url', $url );
     }
