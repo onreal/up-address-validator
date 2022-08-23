@@ -38,11 +38,13 @@ class WcAddressValidation
     }
 
     /**
+     * Get destination to validate address, destination array should contain the following items
+     * array ( 'shipping_state' => '', 'shipping_postcode' => '', 'shipping_country' => '' );
      * @return array
      */
     private static function getDestination (): array
     {
-        return self::$destination;
+        return apply_filters( 'upio_av_destination', self::$destination );
     }
 
     /**
@@ -77,12 +79,13 @@ class WcAddressValidation
     private function getGeocodeUrl (): string
     {
         $destination = self::getDestination();
+        $apiKey = apply_filters( 'upio_av_gg_api_key', $this->getOption( 'google_geocoding_api_key' ) );
         $base_url = "https://maps.googleapis.com/maps/api/geocode/json?components=";
         $url = $base_url . 'administrative_area%3A' . $destination['shipping_state'];
         $url .= '%7Cpostal_code%3A' . $destination['shipping_postcode'];
         $url .= '%7Ccountry%3A' . $destination['shipping_country'];
-        $url .= '&key=' . $this->getOption( 'google_geocoding_api_key' );
-        return $url;
+        $url .= '&key=' . $apiKey;
+        return apply_filters( 'upio_av_geocoding_request_url', $url );
     }
 
     /**
@@ -91,7 +94,7 @@ class WcAddressValidation
      */
     private function runValidation ()
     {
-        $geocoding_response = $this->geoCodingRequest();
+        $geocoding_response = apply_filters( 'upio_av_geocoding_validation_response', $this->geoCodingRequest() );
         $this->responseValidation( $geocoding_response );
     }
 
@@ -101,16 +104,18 @@ class WcAddressValidation
      */
     private function responseValidation ( $response )
     {
+        $validationMessage = apply_filters( 'upio_av_validation_message', 'Your address cannot be validated.' );
+
         if ( !is_object( $response ) || !property_exists( $response, 'status' )
             || !property_exists( $response, 'results' ) )
         {
-            wc_add_notice( __( 'Your address cannot be validated.' ), 'error' );
+            wc_add_notice( __( $validationMessage ), 'error' );
             return;
         }
 
         if ( !is_array( $response->results ) || empty( $response->results ) )
         {
-            wc_add_notice( __( 'Your address cannot be validated.' ), 'error' );
+            wc_add_notice( __( $validationMessage ), 'error' );
             return;
         }
 
