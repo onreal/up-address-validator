@@ -10,7 +10,7 @@ after that and only on checkout page, the plugin will fire the appropriate Wooco
 Currently, UP AV check if there are any results from the Google Geocoding request. 
 If there are empty results the validation is considered as false.
 
-Available filter Hooks
+Filter Hooks
 ------------------
 ### upio_av_destination
 Set your own destination in order to validate with geocoding API
@@ -69,14 +69,16 @@ Installation
 ------------
 To install and configure...
 
-1. Download the plugin as a zip file through gitlab realease page.
-2. Upload the plugin through your WordPress admin. `Plugins->Add New->Upload`
-3. Activate the plugin under the `Plugins` admin menu.
+1. Download the plugin as a zip file through gitlab realease page
+2. Upload the plugin through your WordPress admin `Plugins->Add New->Upload`
+3. Activate the plugin under the `Plugins` admin menu
 4. Manage caching under `Settings->Up Address Validation`
 
 TODO
 ------------
 1. Test plugin on more WordPress installations -> In progress
+2. Add language support validation message
+3. Dynamic validation message through wp-admin options
 
 How to contribute ?
 ------------
