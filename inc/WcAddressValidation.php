@@ -81,9 +81,9 @@ class WcAddressValidation
         $destination = self::getDestination();
         $apiKey = apply_filters( 'upio_av_gg_api_key', $this->getOption( 'google_geocoding_api_key' ) );
         $base_url = "https://maps.googleapis.com/maps/api/geocode/json?components=";
-        $url = $base_url . 'administrative_area%3A' . $destination['shipping_state'];
-        $url .= '%7Cpostal_code%3A' . $destination['shipping_postcode'];
-        $url .= '%7Ccountry%3A' . $destination['shipping_country'];
+        $url = $base_url . 'administrative_area%3A' . $destination['billing_state'];
+        $url .= '%7Cpostal_code%3A' . $destination['billing_postcode'];
+        $url .= '%7Ccountry%3A' . $destination['billing_country'];
         $url .= '&key=' . $apiKey;
         return apply_filters( 'upio_av_geocoding_request_url', $url );
     }
@@ -94,8 +94,9 @@ class WcAddressValidation
      */
     private function runValidation ()
     {
-        $geocoding_response = apply_filters( 'upio_av_geocoding_validation_response', $this->geoCodingRequest() );
-        $this->responseValidation( $geocoding_response );
+        $response = $this->geoCodingRequest();
+        $geocodingResponse = apply_filters( 'upio_av_geocoding_validation_response',  $response );
+        $this->responseValidation( $geocodingResponse );
     }
 
     /**
@@ -105,20 +106,17 @@ class WcAddressValidation
     private function responseValidation ( $response )
     {
         $validationMessage = apply_filters( 'upio_av_validation_message', 'Your address cannot be validated.' );
-
         if ( !is_object( $response ) || !property_exists( $response, 'status' )
             || !property_exists( $response, 'results' ) )
         {
             wc_add_notice( __( $validationMessage ), 'error' );
             return;
         }
-
         if ( !is_array( $response->results ) || empty( $response->results ) )
         {
             wc_add_notice( __( $validationMessage ), 'error' );
             return;
         }
-
         wc_clear_notices();
     }
 
@@ -145,10 +143,11 @@ class WcAddressValidation
     }
 
     public function enable () {
-        if ( !class_exists( 'WooCommerce' ) ) {
+        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        if ( !is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
             return;
         }
-        if ( !$this->getOption( 'is_enabled' ) || !is_checkout() ) {
+        if ( !$this->getOption( 'is_enabled' ) ) {
             return;
         }
         add_action( 'woocommerce_checkout_process', array( $this, 'up_av_validate_address' ) );
