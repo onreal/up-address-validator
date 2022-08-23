@@ -3,7 +3,7 @@
 Plugin Name: Up Address Validator
 Plugin URI:
 Description: Validate Woocommerce shipping address during the checkout process. Works also with AJAX request that is used from various one page checkout plugins
-Version: 1.1.0
+Version: 1.1.1
 Author: Margarit Koka <UPIO>
 Author URI: https://upio.gr/
 Update URI:
@@ -26,9 +26,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define( 'UP_ADDRESS_VALIDATION_PATH', plugin_dir_path( __FILE__ ) );
+define( 'UP_AV_PATH', plugin_dir_path( __FILE__ ) );
+const UP_AV_INC_PATH   = UP_AV_PATH . 'inc/';
 
-include_once UP_ADDRESS_VALIDATION_PATH . 'Autoloader.php';
+include_once UP_AV_PATH . 'Autoloader.php';
 
 use Upio\UpAddressValidator\WcAddressValidation;
 use Upio\UpAddressValidator\Admin\OptionsAdmin;
