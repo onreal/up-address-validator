@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: Up Address Validator
-Plugin URI:
+Plugin URI: https://github.com/onreal/up-address-validator
 Description: Validate Woocommerce shipping address during the checkout process. Works also with AJAX request that is used from various one page checkout plugins
 Version: 1.1.1
 Author: Margarit Koka <UPIO>
 Author URI: https://upio.gr/
-Update URI:
+Update URI: https://github.com/onreal/up-address-validator
 Text Domain: upio-up-av
 License: GPLv2
 */
